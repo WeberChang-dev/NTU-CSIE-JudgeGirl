@@ -1,0 +1,87 @@
+#include<stdio.h>
+void rook(int r, int c, int board[r][c], int x, int y);
+void bishop(int r, int c, int board[r][c], int x, int y);
+void if_while();
+int main(){
+    int r, c;
+    scanf("%d %d", &r, &c);
+    int board[r][c];
+    for(int i = 0; i < r; i++)
+        for(int j = 0; j < c; j++)
+            board[i][j] = 0;
+    int chess, x, y;
+    while(scanf("%d %d %d", &chess, &x, &y) == 3){
+        switch(chess){
+            case(0):
+                board[y][x] = 1;
+                break;
+            case(1):
+                bishop(r, c, board, x, y);
+                rook(r, c, board, x, y);
+                break;
+            case(2):
+                bishop(r, c, board, x, y);
+                break;
+            case(3):
+                rook(r, c, board, x, y);
+                break;
+        }
+    }
+    for(int i = 0; i < r; i++){
+        for(int j = 0; j < c; j++)
+            printf("%d ", board[i][j]);
+        printf("\n");
+    }
+    return 0;
+}
+void rook(int r, int c, int board[r][c], int x, int y){
+    board[y][x] = 0;
+    int up, down;
+    for(up = y; up >= 0; up--)
+        if(board[up][x] == 1)
+            break;
+        else
+            board[up][x] = 1;
+    for(down = y + 1; down < r; down++)
+        if(board[down][x] == 1)
+            break;
+           else
+               board[down][x] = 1;
+    board[y][x] = 0;
+    int left, right;
+    for(left = x; left >= 0; left--)
+        if(board[y][left] == 1)
+            break;
+        else
+            board[y][left] = 1;
+    for(right = x + 1; right < c; right++)
+        if(board[y][right] == 1)
+            break;
+        else
+            board[y][right] = 1;
+}
+void bishop(int r, int c, int board[r][c], int x, int y){
+    board[y][x] = 0;
+    int left, temp_left, right, temp_right;
+    for(left = y, temp_left = x; left >= 0 && temp_left >=0 ; left--, temp_left--)
+        if(board[left][temp_left] == 1)
+            break;
+        else
+            board[left][temp_left] = 1;
+    for(right = y + 1, temp_right = x + 1; right < r && temp_right < c; right++, temp_right++)
+        if(board[right][temp_right] == 1)
+            break;
+        else
+            board[right][temp_right] = 1;
+    board[y][x] = 0;
+    for(left = y, temp_left = x; left >= 0 && temp_left < c; left--, temp_left++)
+        if(board[left][temp_left] == 1)
+            break;
+        else
+            board[left][temp_left] = 1;
+    for(right = y + 1, temp_right = x - 1; right < r && temp_right >= 0; right++, temp_right--)
+        if(board[right][temp_right] == 1)
+            break;
+        else
+            board[right][temp_right] = 1;
+}
